@@ -27,8 +27,8 @@
 					<tr>
 						<th>등급/코드번호</th>
 						<td><c:choose>
-							<c:when test="${member.authLevel == 1}">골드/${memeber.membercode }</c:when>
-							<c:when test="${member.authLevel == 2}">실버/${memeber.membercode }</c:when>
+							<c:when test="${member.authLevel == 1}">골드/${member.membercode }</c:when>
+							<c:when test="${member.authLevel == 2}">실버/${member.membercode }</c:when>
 							<c:when test="${member.authLevel == 7}">관리자</c:when>
 							<c:otherwise>일반</c:otherwise>
 						</c:choose></td>
