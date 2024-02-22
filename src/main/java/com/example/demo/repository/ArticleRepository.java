@@ -18,9 +18,10 @@ public interface ArticleRepository {
 			article SET
 			regDate = NOW(),
 			updateDate = NOW(),
+			memberId = #{memberId},
 			title = #{title}, `body` = #{body}
 			""")
-	public void writeArticle(String title, String body);
+	public void writeArticle(int memberId, String title, String body);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
@@ -36,5 +37,6 @@ public interface ArticleRepository {
 
 	@Select("SELECT * FROM article ORDER BY id DESC")
 	public List<Article> getArticles();
+
 
 }
