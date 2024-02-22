@@ -32,7 +32,10 @@
 						<th>이메일</th>
 						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="이메일을 입력해주세요" name="email" /></td>
 					</tr>
-
+					<tr>
+						<th>멤버쉽번호</th>
+						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="멤버쉽번호를 입력해주세요" name="memberCode" /></td>
+					</tr>
 					<tr>
 						<th></th>
 						<td><input class="btn btn-info" type="submit" value="가입" /></td>

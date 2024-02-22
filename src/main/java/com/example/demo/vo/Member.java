@@ -14,6 +14,7 @@ public class Member {
 	private String loginId;
 	private String loginPw;
 	private int authLevel;
+	private String membercode;
 	private String name;
 	private String nickname;
 	private String cellphoneNum;

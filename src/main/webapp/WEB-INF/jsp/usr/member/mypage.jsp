@@ -25,6 +25,15 @@
 						<td>${member.nickname }</td>
 					</tr>
 					<tr>
+						<th>등급/코드번호</th>
+						<td><c:choose>
+							<c:when test="${member.authLevel == 1}">골드/${memeber.membercode }</c:when>
+							<c:when test="${member.authLevel == 2}">실버/${memeber.membercode }</c:when>
+							<c:when test="${member.authLevel == 7}">관리자</c:when>
+							<c:otherwise>일반</c:otherwise>
+						</c:choose></td>
+					</tr>
+					<tr>
 						<th>전화번호</th>
 						<td>${member.cellphoneNum }</td>
 					</tr>
