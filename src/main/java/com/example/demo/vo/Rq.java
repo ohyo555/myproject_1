@@ -20,8 +20,6 @@ public class Rq {
 	private boolean isLogined;
 	@Getter
 	private int loginedMemberId;
-	@Getter
-	private String loginedMemberNickname;
 	
 	private HttpSession session;
 
@@ -38,7 +36,6 @@ public class Rq {
 		if (httpSession.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-			loginedMemberNickname = (String) httpSession.getAttribute("loginedMemberNickname");
 		}
 
 		this.req.setAttribute("rq", this);

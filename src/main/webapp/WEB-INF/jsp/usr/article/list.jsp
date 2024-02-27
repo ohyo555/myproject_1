@@ -25,7 +25,6 @@
 					name="searchKeywordTypeCode"> --%>
 					<option value="title" ${searchKeywordTypeCode.equals("title") ? 'selected="selected"' : '' }>제목</option>
 					<option value="body" ${searchKeywordTypeCode.equals("body") ? 'selected="selected"' : '' }>내용</option>
-					<option value="extra__writer" ${searchKeywordTypeCode.equals("extra__writer") ? 'selected="selected"' : '' }>작성자</option>
 				</select> <input value="${param.searchKeyword }" type="text" placeholder="검색어를 입력하세요"
 					class="input input-bordered w-full max-w-xs" name="searchKeyword" />
 				<button class="btn btn-outline" type="submit">검색</button>
@@ -54,7 +53,7 @@
 
 				<c:if test="${articles.size() == 0 }">
 					<tr>
-						<td colspan="6">게시글 없어</td>
+						<td colspan="7">게시글 없어</td>
 					</tr>
 				</c:if>
 
@@ -69,7 +68,7 @@
 							<td><a href="detail?id=${article.id }">${article.title }</a>
 							<div class="inline-block" style="color: #e0316e">[${article.cnt }]</div></td>
 						</c:if>
-						<td>${article.extra__writer }</td>
+						<td>${article.memberId }</td>
 						<td>${article.hitCount }</td>
 						<td>${article.goodReactionPoint }</td>
 						<td>${article.badReactionPoint }</td>

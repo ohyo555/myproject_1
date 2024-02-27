@@ -2,50 +2,126 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="MEMBER JOIN"></c:set>
 <%@ include file="../common/head.jspf"%>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+
+.signup-form {
+	width: 500px;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+}
+
+.signup-form div {
+	display: inline-block;
+	width: 100%;
+	font-size: 1rem;
+}
+
+.signup-form label {
+	width: 20%;
+	display: inline-block;
+}
+
+.signup-form div .msg {
+	display: inline;
+	color: #800808;
+	font-size: 0.75rem;
+}
+
+.signup-form input {
+	padding: 8px;
+	margin-bottom: 16px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.signup-form button {
+	background-color: #800808;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.75rem;
+}
+
+.signup-form button:hover {
+	background-color: #260301;
+}
+
+</style>
+
+<script>
+        $(function() {
+            $("#birthdate").datepicker({
+            	dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: 'c-100:c+0'
+        });
+</script>
+
+<script>
+	function callByAjax(loginId) {
+		
+		var form = document.form1;
+		
+		var action = "../member/doAction";
+		var loginId = form.loginId.value;
+		
+		$.get(action, {
+			loginId : loginId,
+		}, function(data) {
+			$('.msg').text(data);
+		}, 'html');
+		
+	}
+</script>
 
 <section class="mt-8 text-xl px-4">
-	<div class="mx-auto">
-		<form action="../member/doJoin" method="POST">
-			<table class="join-box table-box-1" border="1">
-				<tbody>
-					<tr>
-						<th>아이디</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="아이디를 입력해주세요" name="loginId" /></td>
-					</tr>
-					<tr>
-						<th>비밀번호</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="비밀번호를 입력해주세요" name="loginPw" /></td>
-					</tr>
-					<tr>
-						<th>이름</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="이름을 입력해주세요" name="name" /></td>
-					</tr>
-					<tr>
-						<th>닉네임</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="닉네임을 입력해주세요" name="nickname" /></td>
-					</tr>
-					<tr>
-						<th>전화번호</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="전화번호를 입력해주세요" name="cellphoneNum" /></td>
-					</tr>
-					<tr>
-						<th>이메일</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="이메일을 입력해주세요" name="email" /></td>
-					</tr>
-					<tr>
-						<th>멤버쉽번호</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" placeholder="멤버쉽번호를 입력해주세요" name="memberCode" /></td>
-					</tr>
-					<tr>
-						<th></th>
-						<td><input class="btn btn-info" type="submit" value="가입" /></td>
-					</tr>
-				</tbody>
-			</table>
+	<div class="signup-form">
+		<form name="form1" action="../member/doJoin" method="POST">
+
+			<div>
+				<label for="username">*아이디:</label> <input type="text" id="loginId" name="loginId" autocomplete="off" required>
+				<div class="msg"></div>
+			</div>
+
+			<div>
+				<label for="password">*비밀번호:</label> <input type="password" id="loginPw" name="loginPw" autocomplete="off" onclick="callByAjax();" required>
+			</div>
+
+			<div>
+				<label for="birth">*생년월일:</label> <input type="date" id="birth" name="birth" required>
+			</div>
+
+			<div>
+				<label for="name">*이름:</label> <input type="text" id="mname" name="mname" autocomplete="off" required>
+			</div>
+
+			<div>
+				<label for="cellphoneNum">전화번호:</label> <input type="tel" id="cellphoneNum" name="cellphoneNum" autocomplete="off">
+			</div>
+
+			<div>
+				<label for="email">이메일:</label> <input type="email" id="email" name="email" autocomplete="off">
+			</div>
+
+			<div>
+				<label for="address">주소:</label> <input type="text" id="address" name="address" autocomplete="off">
+			</div>
+
+			<div class="center-text mt-5">
+				<button type="submit">가입</button>
+				<button type="button" onclick="history.back();">뒤로가기</button>
+			</div>
 		</form>
-		<div class="btns mt-5">
-			<button class="btn btn-outline" type="button" onclick="history.back();">뒤로가기</button>
-		</div>
+
 	</div>
 </section>
 

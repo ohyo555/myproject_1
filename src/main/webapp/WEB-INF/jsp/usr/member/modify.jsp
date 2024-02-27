@@ -22,7 +22,7 @@
 					</tr>
 					<tr>
 						<th>닉네임</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" name="nickname" value="${member.nickname }" /></td>
+						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"  /></td>
 					</tr>
 					<tr>
 						<th>전화번호</th>

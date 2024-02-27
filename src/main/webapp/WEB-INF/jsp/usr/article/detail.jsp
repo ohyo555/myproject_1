@@ -52,33 +52,40 @@ a {
 	const params = {};
 	params.id = parseInt('${param.id}');
 	
-	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp};
-	var isAlreadyAddBadRp = ${isAlreadyAddBadRp};
+	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp}; // 이미 좋아요가 눌린상태
+	var isAlreadyAddBadRp = ${isAlreadyAddBadRp}; // 이미 싫어요가 눌린상태
 </script>
 
 <!-- 조회수 -->
-<script>
+<script> // 로컬 스토리지를 사용하여 해당 게시물의 조회 여부 추적
 	function ArticleDetail__doIncreaseHitCount() {
-		const localStorageKey = 'article__' + params.id + '__alreadyView';
+		
+		// 로컬 스토리지 관련 부분
+		const localStorageKey = 'article__' + params.id + '__alreadyView'; // 현재 게시물의 좋아요 여부 파악을 위한 로컬스토리지 키
 
 		if (localStorage.getItem(localStorageKey)) {
 			return;
 		}
 
-		localStorage.setItem(localStorageKey, true);
+		localStorage.setItem(localStorageKey, true); // 로컬 스토리지에 기록
 
+		// 서버로의 ajax 요청 부분
 		$.get('../article/doIncreaseHitCountRd', {
 			id : params.id,
-			ajaxMode : 'Y'
-		}, function(data) {
-			$('.article-detail__hit-count').empty().html(data.data1);
+			ajaxMode : 'Y' //id, ajaxMode 데이터까지 전송
+		}, function(data) { // 반환 데이터 처리
+			$('.article-detail__hit-count').empty().html(data.data1); // 해당 클래스를 가진 요소의 내용을 비우고, 조회수를 나타내는 데이터로 채움
 		}, 'json');
 	}
 
 	$(function() {
 		// 		ArticleDetail__doIncreaseHitCount();
-		setTimeout(ArticleDetail__doIncreaseHitCount, 2000);
+		setTimeout(ArticleDetail__doIncreaseHitCount, 2000); // 페이지가 로드된 후 2초 뒤에 조회수 증가하도록
 	});
+	
+	// 로컬 스토리지를 사용하여 이미 조회한 게시물인지 확인하고, 
+	// 조회되지 않은 경우 서버로 Ajax 요청을 보내 조회수를 증가시키며,
+	// 최종적으로 해당 데이터를 HTML 요소에 출력
 </script>
 
 <!-- 좋아요 싫어요  -->
@@ -288,7 +295,7 @@ a {
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td>${article.extra__writer }</td>
+					<td>${article.memberId }</td>
 				</tr>
 				<tr>
 					<th>좋아요</th>
@@ -365,7 +372,6 @@ a {
 								src="https://health.chosun.com/site/data/img_dir/2023/07/17/2023071701753_0.jpg" />
 						</div>
 					</div>
-					<%-- <div class="comment">${rq.loginedMemberNickname }</div> --%>
 				</div>
 				<div class="flex-none gap-2 m-3 ">
 					<div class="form-control">
@@ -388,7 +394,7 @@ a {
 					</div>
 				</div>
 				<div class="chat-header">
-					${comments.extra__writer }
+					${comments.memberId }
 					<time class="text-xs opacity-50">${comments.updateDate.substring(0,10) }</time>
 				</div>
 				<div class = "rr">

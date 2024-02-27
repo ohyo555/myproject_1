@@ -38,7 +38,7 @@ public interface ArticleRepository {
 	public Article getArticle(int id);
 	
 	@Select("""
-			SELECT A.*, M.nickname AS extra__writer
+			SELECT A.*
 			FROM article AS A
 			INNER JOIN `member` AS M
 			ON A.memberId = M.id
@@ -48,10 +48,8 @@ public interface ArticleRepository {
 	
 	@Select("""
 			<script>
-			SELECT A.*, M.nickname AS extra__writer
+			SELECT *
 			FROM article AS A
-			INNER JOIN `member` AS M
-			ON A.memberId = M.id
 			WHERE A.id = #{id}
 			GROUP BY A.id
 			</script>
@@ -82,10 +80,8 @@ public interface ArticleRepository {
 	
 //	@Select("SELECT * FROM article ORDER BY id DESC")
 	@Select("""
-			SELECT A.*, M.nickname AS extra__writer
+			SELECT *
 			FROM article AS A
-			INNER JOIN `member` AS M
-			ON A.memberId = M.id
 			ORDER BY A.id DESC
 			""")
 	public List<Article> getArticles();
@@ -119,10 +115,8 @@ public interface ArticleRepository {
 	
 	@Select("""
 			<script>
-			SELECT A.*, M.nickname AS extra__writer, IFNULL(COUNT(C.id),0) AS cnt
+			SELECT A.*, IFNULL(COUNT(C.id),0) AS cnt
 			FROM article AS A
-			INNER JOIN `member` AS M
-			ON A.memberId = M.id
 			LEFT JOIN `comment` AS C
 			ON A.id = C.relId
 			WHERE 1
@@ -136,9 +130,6 @@ public interface ArticleRepository {
 					</when>
 					<when test="searchKeywordTypeCode == 'body'">
 						AND A.body LIKE CONCAT('%',#{searchKeyword},'%')
-					</when>
-					<when test="searchKeywordTypeCode == 'extra__writer'">
-						AND M.nickname LIKE CONCAT('%',#{searchKeyword},'%')
 					</when>
 					<otherwise>
 						AND A.title LIKE CONCAT('%',#{searchKeyword},'%')

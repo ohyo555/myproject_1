@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.MemberService;
 import com.example.demo.util.Ut;
-import com.example.demo.vo.Article;
 import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
@@ -78,11 +81,9 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack("F-4", Ut.f("비밀번호가 일치하지 않습니다"));
 		}
 
-		httpSession.setAttribute("loginedMemberNickname", member.getNickname());
-		
 		rq.login(member);
 
-		return Ut.jsReplace("S-1", Ut.f("%s님 환영합니다", member.getNickname()), "/");
+		return Ut.jsReplace("S-1", Ut.f("%s님 환영합니다", member.getLoginId()), "/");
 	}
 
 	@RequestMapping("/usr/member/join")
@@ -99,33 +100,30 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname,
-			String cellphoneNum, String email) {
+	public String doJoin(HttpServletRequest req, String loginId, String loginPw, String birth, String mname, 
+			String cellphoneNum, String email, String address) {
+		
 		Rq rq = (Rq) req.getAttribute("rq");
 		if (rq.isLogined()) {
 			return Ut.jsHistoryBack("F-A", "이미 로그인 상태입니다");
 		}
-
 		if (Ut.isNullOrEmpty(loginId)) {
 			return Ut.jsHistoryBack("F-1", "아이디를 입력해주세요");
 		}
 		if (Ut.isNullOrEmpty(loginPw)) {
 			return Ut.jsHistoryBack("F-2", "비밀번호를 입력해주세요");
 		}
-		if (Ut.isNullOrEmpty(name)) {
+		if (Ut.isNullOrEmpty(mname)) {
 			return Ut.jsHistoryBack("F-3", "이름을 입력해주세요");
 		}
-		if (Ut.isNullOrEmpty(nickname)) {
-			return Ut.jsHistoryBack("F-4", "닉네임을 입력해주세요");
-		}
-		if (Ut.isNullOrEmpty(cellphoneNum)) {
-			return Ut.jsHistoryBack("F-5", "전화번호를 입력해주세요");
+		if (Ut.isNullOrEmpty(birth)) {
+			return Ut.jsHistoryBack("F-4", "생년월일을 입력해주세요");
 		}
 		if (Ut.isNullOrEmpty(email)) {
-			return Ut.jsHistoryBack("F-6", "이메일을 입력해주세요");
+			return Ut.jsHistoryBack("F-5", "이메일을 입력해주세요");
 		}
-
-		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
+ 
+		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, birth, mname, cellphoneNum, email, address);
 
 		if (joinRd.isFail()) {
 			return Ut.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
@@ -134,6 +132,27 @@ public class UsrMemberController {
 		Member member = memberService.getMember(joinRd.getData1());
 
 		return Ut.jsReplace(joinRd.getResultCode(), joinRd.getMsg(), "../member/login");
+	}
+	
+	@SuppressWarnings("unused")
+	@RequestMapping("/usr/member/doAction")
+	@ResponseBody
+	public String doAction(String loginId) {
+		
+		Member existsMember = memberService.getMemberByLoginId(loginId);
+		
+		String msg = "중복된 아이디가 존재합니다.";
+		System.out.println("#$#$#$#$#$#" + loginId);
+		if (existsMember == null) {
+			if (loginId == "") {
+				msg = "아이디는 필수 정보입니다.";
+				return msg;
+			}
+			msg = "사용가능한 아이디입니다.";
+			return msg;
+		}
+
+		return msg;
 	}
 	
 	@RequestMapping("/usr/member/mypage")
@@ -164,7 +183,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(HttpServletRequest req, String loginPw, String name, String nickname,
+	public String doModify(HttpServletRequest req, String loginPw, String mname,
 			String cellphoneNum, String email) {
 		
 		Rq rq = (Rq) req.getAttribute("rq");
@@ -173,11 +192,8 @@ public class UsrMemberController {
 		if (Ut.isNullOrEmpty(loginPw)) {
 			return Ut.jsHistoryBack("F-1", "비밀번호를 입력해주세요");
 		}
-		if (Ut.isNullOrEmpty(name)) {
+		if (Ut.isNullOrEmpty(mname)) {
 			return Ut.jsHistoryBack("F-2", "이름을 입력해주세요");
-		}
-		if (Ut.isNullOrEmpty(nickname)) {
-			return Ut.jsHistoryBack("F-3", "닉네임을 입력해주세요");
 		}
 		if (Ut.isNullOrEmpty(cellphoneNum)) {
 			return Ut.jsHistoryBack("F-4", "전화번호를 입력해주세요");
@@ -186,8 +202,6 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack("F-5", "이메일을 입력해주세요");
 		}
 		
-		memberService.setMember(id, loginPw, name, nickname, cellphoneNum, email);
-		req.setAttribute(nickname, nickname);
 		
 		return Ut.jsReplace("S-1", "회원정보가 수정되었습니다", "/");
 	}
@@ -206,20 +220,17 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/dofindId")
 	@ResponseBody
-	public String doFindId(HttpServletRequest req, String name, String cellphoneNum, String email) {
+	public String doFindId(HttpServletRequest req, String mname, String cellphoneNum, String email) {
 		
 		Rq rq = (Rq) req.getAttribute("rq");
 		int id = rq.getLoginedMemberId();
 		
-		if (Ut.isNullOrEmpty(name)) {
+		if (Ut.isNullOrEmpty(mname)) {
 			return Ut.jsHistoryBack("F-1", "이름을 입력해주세요");
 		}
 		if (Ut.isNullOrEmpty(cellphoneNum)) {
 			return Ut.jsHistoryBack("F-2", "전화번호를 입력해주세요");
 		}
-		
-//		memberService.setMember(id, loginPw, name, nickname, cellphoneNum, email);
-//		req.setAttribute(nickname, nickname);
 		
 		return Ut.jsReplace("S-1", "회원정보가 수정되었습니다", "/");
 	}
@@ -247,9 +258,6 @@ public class UsrMemberController {
 		if (Ut.isNullOrEmpty(loginId)) {
 			return Ut.jsHistoryBack("F-1", "아이디를 입력해주세요");
 		}
-		
-//		memberService.setMember(id, loginPw, name, nickname, cellphoneNum, email);
-//		req.setAttribute(nickname, nickname);
 		
 		return Ut.jsReplace("S-1", "회원정보가 수정되었습니다", "/");
 	}

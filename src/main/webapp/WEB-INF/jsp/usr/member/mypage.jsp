@@ -18,20 +18,16 @@
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td>${member.name }</td>
-					</tr>
-					<tr>
-						<th>닉네임</th>
-						<td>${member.nickname }</td>
+						<td>${member.mname }</td>
 					</tr>
 					<tr>
 						<th>등급/코드번호</th>
 						<td><c:choose>
-							<c:when test="${member.authLevel == 1}">골드/${member.membercode }</c:when>
-							<c:when test="${member.authLevel == 2}">실버/${member.membercode }</c:when>
-							<c:when test="${member.authLevel == 7}">관리자</c:when>
-							<c:otherwise>일반</c:otherwise>
-						</c:choose></td>
+								<c:when test="${member.authLevel == 1}">골드/${member.membercode }</c:when>
+								<c:when test="${member.authLevel == 2}">실버/${member.membercode }</c:when>
+								<c:when test="${member.authLevel == 7}">관리자</c:when>
+								<c:otherwise>일반</c:otherwise>
+							</c:choose></td>
 					</tr>
 					<tr>
 						<th>전화번호</th>

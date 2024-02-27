@@ -16,7 +16,7 @@ import com.example.demo.vo.ReactionPoint;
 public interface CommentRepository {
 
 	@Select("""
-			SELECT C.*, M.nickname AS extra__writer, SUM(C.goodreactionPoint) AS `sum`
+			SELECT C.*, SUM(C.goodreactionPoint) AS `sum`
 			FROM `comment` AS C
 			INNER JOIN `member` AS M
 			ON C.memberId = M.id

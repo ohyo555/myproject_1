@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.repository.ArticleRepository;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.CommentService;
@@ -101,7 +100,6 @@ public class UsrArticleController {
 		int commentsCount = comments.size();
 	
 		model.addAttribute("loginedMember", rq.getLoginedMemberId());
-		model.addAttribute("loginedMemberNickname", rq.getLoginedMemberNickname());
 		model.addAttribute("article", article);
 		model.addAttribute("comments", comments);
 		model.addAttribute("commentsCount", commentsCount);

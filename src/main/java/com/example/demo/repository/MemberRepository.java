@@ -20,10 +20,10 @@ public interface MemberRepository {
 	@Select("""
 			SELECT *
 			FROM `member`
-			WHERE name = #{name} 
+			WHERE mname = #{mname} 
 			AND email = #{email}
 			""")
-	public Member getMemberByNameAndEmail(String name, String email);
+	public Member getMemberByNameAndEmail(String mname, String email);
 
 	@Insert("""
 			INSERT INTO
@@ -32,12 +32,13 @@ public interface MemberRepository {
 			updateDate = NOW(),
 			loginId = #{loginId},
 			loginPw = #{loginPw},
-			`name` = #{name},
-			nickname = #{nickname},
+			birth = #{birth},
+			mname = #{mname},
 			cellphoneNum = #{cellphoneNum},
-			email = #{email}
+			email = #{email},
+			address = #{address}
 			""")
-	public void join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
+	public void join(String loginId, String loginPw, String birth, String mname, String cellphoneNum, String email, String address);
 
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
@@ -57,8 +58,7 @@ public interface MemberRepository {
 			UPDATE member
 			<set>
 			<if test="loginPw != null and loginPw != ''">loginPw = #{loginPw},</if>
-			<if test="name != null and name != ''">name = #{name},</if>
-			<if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+			<if test="mname != null and mname != ''">mname = #{mname},</if>
 			<if test="cellphoneNum != null and cellphoneNum != ''">cellphoneNum = #{cellphoneNum},</if>
 			<if test="email != null and email != ''">email = #{email},</if>
 			updateDate = NOW()
@@ -66,6 +66,6 @@ public interface MemberRepository {
 			WHERE id = #{id}
 			</script>
 			""")
-	public void setMember(int id, String loginPw, String name, String nickname, String cellphoneNum, String email);
+	public void setMember(int id, String loginPw, String mname, String cellphoneNum, String email);
 
 }
