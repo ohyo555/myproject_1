@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -142,7 +141,7 @@ public class UsrMemberController {
 		Member existsMember = memberService.getMemberByLoginId(loginId);
 		
 		String msg = "중복된 아이디가 존재합니다.";
-		System.out.println("#$#$#$#$#$#" + loginId);
+		
 		if (existsMember == null) {
 			if (loginId == "") {
 				msg = "아이디는 필수 정보입니다.";
@@ -184,28 +183,16 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public String doModify(HttpServletRequest req, String loginPw, String mname,
-			String cellphoneNum, String email) {
+			String cellphoneNum, String email, String address) {
 		
 		Rq rq = (Rq) req.getAttribute("rq");
 		int id = rq.getLoginedMemberId();
 		
-		if (Ut.isNullOrEmpty(loginPw)) {
-			return Ut.jsHistoryBack("F-1", "비밀번호를 입력해주세요");
-		}
-		if (Ut.isNullOrEmpty(mname)) {
-			return Ut.jsHistoryBack("F-2", "이름을 입력해주세요");
-		}
-		if (Ut.isNullOrEmpty(cellphoneNum)) {
-			return Ut.jsHistoryBack("F-4", "전화번호를 입력해주세요");
-		}
-		if (Ut.isNullOrEmpty(email)) {
-			return Ut.jsHistoryBack("F-5", "이메일을 입력해주세요");
-		}
-		
+		memberService.setMember(id, loginPw, mname, cellphoneNum, email, address);
+//		req.setAttribute(nickname, nickname);
 		
 		return Ut.jsReplace("S-1", "회원정보가 수정되었습니다", "/");
 	}
-	
 	@RequestMapping("/usr/member/findId")
 	public String showFindId(HttpServletRequest req) {
 
@@ -260,6 +247,47 @@ public class UsrMemberController {
 		}
 		
 		return Ut.jsReplace("S-1", "회원정보가 수정되었습니다", "/");
+	}
+	
+	@RequestMapping("/usr/member/membership")
+	public String membership(HttpServletRequest req, Model model) {
+
+		Rq rq = (Rq) req.getAttribute("rq");
+
+		int id = rq.getLoginedMemberId();
+		
+		Member member = memberService.getMember(id);
+		
+		model.addAttribute("member", member);
+		
+		return "usr/member/membership";
+	}
+	
+	@RequestMapping("/usr/member/doMembership")
+	public String doMembership(HttpServletRequest req, Model model, String loginId, String mname, 
+			String cellphoneNum, String email, String address, String level) {
+		
+		int lv = Integer.parseInt(level);
+		
+		// @SuppressWarnings("unused") 경고 메시지를 무시하도록 지정
+		String membercode;
+		
+        if (lv == 1) {
+        	membercode = "G" + (int) (Math.random() * (99999 - 10000 + 1) + 10000);
+        } else {
+        	membercode = "S" + (int) (Math.random() * (99999 - 10000 + 1) + 10000);
+        }
+
+		ResultData<Integer> membershipRd = memberService.membership(loginId, lv, membercode);
+		
+		memberService.setMember2(loginId, mname, cellphoneNum, email, address, lv, membercode);
+		
+		if (membershipRd.isFail()) {
+			return Ut.jsHistoryBack(membershipRd.getResultCode(), membershipRd.getMsg());
+		}
+
+		return Ut.jsReplace(membershipRd.getResultCode(), membershipRd.getMsg(), "../member/mypage");
+		
 	}
 	
 }

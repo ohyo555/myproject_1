@@ -61,11 +61,41 @@ public interface MemberRepository {
 			<if test="mname != null and mname != ''">mname = #{mname},</if>
 			<if test="cellphoneNum != null and cellphoneNum != ''">cellphoneNum = #{cellphoneNum},</if>
 			<if test="email != null and email != ''">email = #{email},</if>
+			<if test="address != null and address != ''">address = #{address},</if>
 			updateDate = NOW()
 			</set>
 			WHERE id = #{id}
 			</script>
 			""")
-	public void setMember(int id, String loginPw, String mname, String cellphoneNum, String email);
+	public void setMember(int id, String loginPw, String mname, String cellphoneNum, String email, String address);
+
+	@Update("""
+			<script>
+			UPDATE member
+			<set>
+			<if test="mname != null and mname != ''">mname = #{mname},</if>
+			<if test="cellphoneNum != null and cellphoneNum != ''">cellphoneNum = #{cellphoneNum},</if>
+			<if test="email != null and email != ''">email = #{email},</if>
+			<if test="address != null and address != ''">address = #{address},</if>
+			<if test="lv != null and lv != ''">`authLevel` = #{lv},</if>
+			membercode = #{membercode},
+			updateDate = NOW()
+			</set>
+			WHERE loginId = #{loginId}
+			</script>
+			""")
+	public void setMember2(String loginId, String mname, String cellphoneNum, String email, String address, int lv, String membercode);
+	
+	@Insert("""
+			INSERT INTO
+			membership SET
+			loginId = #{loginId},
+			`authLevel` = #{lv},
+			membercode = #{membercode},
+			regDate = NOW(),
+			updateDate = NOW(),
+			endDate = NOW()
+			""")
+	public void membership(String loginId, int lv, String membercode);
 
 }

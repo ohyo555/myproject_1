@@ -11,8 +11,15 @@
 .signup-form {
 	width: 500px;
 	background-color: #fff;
+	margin: 100px auto;
 	padding: 20px;
 	border-radius: 8px;
+}
+
+.signup-form .text{
+	font-size: 0.7rem;
+	/* text-align: right; */
+	margin-left: 15rem;
 }
 
 .signup-form div {
@@ -86,7 +93,7 @@
 <section class="mt-8 text-xl px-4">
 	<div class="signup-form">
 		<form name="form1" action="../member/doJoin" method="POST">
-
+			<div class="text">*는 필수정보</div>
 			<div>
 				<label for="username">*아이디:</label> <input type="text" id="loginId" name="loginId" autocomplete="off" required>
 				<div class="msg"></div>

@@ -18,11 +18,7 @@
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" name="name" value="${member.name }"/></td>
-					</tr>
-					<tr>
-						<th>닉네임</th>
-						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text"  /></td>
+						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" name="mname" value="${member.mname }"/></td>
 					</tr>
 					<tr>
 						<th>전화번호</th>
@@ -31,6 +27,10 @@
 					<tr>
 						<th>이메일</th>
 						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" name="email" value="${member.email }" /></td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td><input class="input input-bordered input-primary w-full max-w-xs" autocomplete="off" type="text" name="address" value="${member.address }" /></td>
 					</tr>
 
 					<tr>

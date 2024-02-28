@@ -51,10 +51,21 @@ public class MemberService {
 		return memberRepository.getMember(id);
 	}
 	
-	public void setMember(int id, String loginPw, String mname, String cellphoneNum, String email) {
-		memberRepository.setMember(id, loginPw, mname, cellphoneNum, email);
+	public void setMember(int id, String loginPw, String mname, String cellphoneNum, String email, String address) {
+		memberRepository.setMember(id, loginPw, mname, cellphoneNum, email, address);
 	}
 
-	
+	public ResultData<Integer> membership(String loginId, int lv, String membercode) {
+		
+		memberRepository.membership(loginId, lv, membercode);
+
+		int id = memberRepository.getLastInsertId();
+		
+		return ResultData.from("S-1", "멤버쉽가입이 완료되었습니다.", "id", id);
+	}
+
+	public void setMember2(String loginId, String mname, String cellphoneNum, String email, String address, int lv, String membercode) {
+		memberRepository.setMember2(loginId, mname, cellphoneNum, email, address, lv, membercode);
+	}
 
 }
