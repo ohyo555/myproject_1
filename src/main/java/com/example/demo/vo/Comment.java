@@ -13,7 +13,6 @@ public class Comment {
 	private String updateDate;
 	private int memberId;
 	private String relTypeCode;
-	private int level;
 	private String comment;
 	private int relId;
 	private int goodReactionPoint;

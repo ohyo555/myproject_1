@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="ARTICLE MODIFY"></c:set>
+<link rel="stylesheet" href="/resource/background.css" />
 <%@ include file="../common/head.jspf"%>
 
 

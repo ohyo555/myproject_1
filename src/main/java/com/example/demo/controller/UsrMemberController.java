@@ -264,21 +264,31 @@ public class UsrMemberController {
 	}
 	
 	@RequestMapping("/usr/member/doMembership")
+	@ResponseBody
 	public String doMembership(HttpServletRequest req, Model model, String loginId, String mname, 
 			String cellphoneNum, String email, String address, String level) {
+		
+		int memberlevel = memberService.getMemberBylevel(loginId);
+		
+		if (memberlevel == 1 || memberlevel == 2) {
+			return Ut.jsHistoryBack("F-1", "이미 멤버쉽이 등록되었습니다.");
+		}
 		
 		int lv = Integer.parseInt(level);
 		
 		// @SuppressWarnings("unused") 경고 메시지를 무시하도록 지정
 		String membercode;
-		
+		String type;
+	
         if (lv == 1) {
         	membercode = "G" + (int) (Math.random() * (99999 - 10000 + 1) + 10000);
+        	type = "골드";
         } else {
         	membercode = "S" + (int) (Math.random() * (99999 - 10000 + 1) + 10000);
+        	type = "실버";
         }
 
-		ResultData<Integer> membershipRd = memberService.membership(loginId, lv, membercode);
+		ResultData<Integer> membershipRd = memberService.membership(loginId, lv, membercode, type);
 		
 		memberService.setMember2(loginId, mname, cellphoneNum, email, address, lv, membercode);
 		

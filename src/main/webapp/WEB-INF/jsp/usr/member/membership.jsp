@@ -5,21 +5,26 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<link rel="stylesheet" href="/resource/background.css" />
 <style>
 
 .signup-form {
-	width: 500px;
-	background-color: #fff;
+	width: 30%;
+	background-color: rgba(255, 255, 255, 0.4);
 	margin: 100px auto;
 	padding: 20px;
 	border-radius: 8px;
+	}
+
+.signup-form .form{
+	text-align: center;
 }
 
 .signup-form .text{
 	font-size: 0.7rem;
-	/* text-align: right; */
-	margin-left: 15rem;
+	text-align: right; /* 오른쪽 정렬 추가 */
+    margin-left: -3rem;
+    position: relative; /* 상대 위치 설정 */
 }
 
 .signup-form div {
@@ -61,16 +66,21 @@
 	background-color: #260301;
 }
 
+.signup-form .form-check-label {
+    width: 90px;
+    height: 15px; /* 원하는 크기로 설정하세요 */
+    margin: 0; /* 기본 마진 제거 */
+}
 </style>
 
 <script>
-        $(function() {
-            $("#birthdate").datepicker({
-            	dateFormat: 'yy-mm-dd',
-                changeMonth: true,
-                changeYear: true,
-                yearRange: 'c-100:c+0'
-        });
+$(function() {
+    $("#birthdate").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: 'c-100:c+0'
+    });
+});
 </script>
 
 <script>
@@ -92,25 +102,28 @@
 
 <script>
 // 골드 등급일 경우 골드 라디오 버튼에 체크 설정
-function setMembershipCheckbox() {
-    var membershipLevel = ${member.authLevel}; // 골드 등급이라고 가정
-    
-    // 해당 등급에 맞는 라디오 버튼 찾기
-    var radioButtons = document.getElementsByName('level');
-    for (var i = 0; i < radioButtons.length; i++) {
-        if (radioButtons[i].value == membershipLevel) {
-            radioButtons[i].checked = true;
+ var membershipLevel = ${member.authLevel};
+
+    // 골드 등급일 경우 골드 라디오 버튼에 체크 설정
+    function setMembershipCheckbox() {
+        // 해당 등급에 맞는 라디오 버튼 찾기
+        var radioButtons = document.getElementsByName('level');
+        for (var i = 0; i < radioButtons.length; i++) {
+            if (radioButtons[i].value == membershipLevel) {
+                radioButtons[i].checked = true;
+            }
         }
     }
-}
 
 // 페이지 로딩 시 실행 (예시)
 window.onload = setMembershipCheckbox;
 </script>
+<body>
+	
 
 <section class="mt-8 text-xl px-4">
 	<div class="signup-form">
-		<form name="form1" action="../member/doMembership" method="POST">
+		<form class="form" name="form1" action="../member/doMembership" method="POST">
 			<div class="text">*는 필수정보</div>
 			<div>
 				<label for="username">*아이디:</label> <input type="text" id="loginId" name="loginId" autocomplete="off" value="${member.loginId }" readonly>
@@ -143,6 +156,6 @@ window.onload = setMembershipCheckbox;
 	</div>
 </section>
 
-
+</body>
 
 <%@ include file="../common/foot.jspf"%>

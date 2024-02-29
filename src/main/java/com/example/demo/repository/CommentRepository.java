@@ -29,12 +29,11 @@ public interface CommentRepository {
 	List<Comment> getForPrintComments(int loginedMemberId, String relTypeCode, int relId);
 
 	@Insert("""
-			INSERT INTO `comment` 
+			INSERT INTO `comment`
 			SET regDate = NOW(),
 			updateDate = NOW(),
 			`comment` = #{comment},
 			memberId = #{loginedMemberId},
-			level = 1,
 			relTypeCode = #{relTypeCode},
 			relId = #{relId}
 			""")
@@ -49,14 +48,11 @@ public interface CommentRepository {
 			WHERE id = #{id}
 			""")
 	public Comment getComment(int id);
-	
 
 	@Update("""
 			UPDATE `comment`
-				<set>
-					<if test="commnet != null and commnet != ''">`comment` = #{comment},</if>
-					updateDate = NOW()
-				</set>
+			SET `comment` = #{comment},
+			updateDate = NOW()
 			WHERE id = #{id}
 				""")
 	void modifyComment(int id, String comment);

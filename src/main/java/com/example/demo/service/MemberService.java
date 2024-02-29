@@ -55,9 +55,9 @@ public class MemberService {
 		memberRepository.setMember(id, loginPw, mname, cellphoneNum, email, address);
 	}
 
-	public ResultData<Integer> membership(String loginId, int lv, String membercode) {
+	public ResultData<Integer> membership(String loginId, int lv, String membercode, String type) {
 		
-		memberRepository.membership(loginId, lv, membercode);
+		memberRepository.membership(loginId, lv, membercode, type);
 
 		int id = memberRepository.getLastInsertId();
 		
@@ -66,6 +66,10 @@ public class MemberService {
 
 	public void setMember2(String loginId, String mname, String cellphoneNum, String email, String address, int lv, String membercode) {
 		memberRepository.setMember2(loginId, mname, cellphoneNum, email, address, lv, membercode);
+	}
+
+	public int getMemberBylevel(String loginId) {
+		return memberRepository.getMemberBylevel(loginId);
 	}
 
 }

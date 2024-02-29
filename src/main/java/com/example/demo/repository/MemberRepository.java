@@ -91,11 +91,15 @@ public interface MemberRepository {
 			membership SET
 			loginId = #{loginId},
 			`authLevel` = #{lv},
+			`type` = #{type},
 			membercode = #{membercode},
 			regDate = NOW(),
 			updateDate = NOW(),
 			endDate = NOW()
 			""")
-	public void membership(String loginId, int lv, String membercode);
+	public void membership(String loginId, int lv, String membercode, String type);
+
+	@Select("SELECT `authLevel` FROM `member` WHERE loginId = #{loginId}")
+	public int getMemberBylevel(String loginId);
 
 }

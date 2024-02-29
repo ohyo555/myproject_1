@@ -1,49 +1,30 @@
 /* 폰트 */
 @font-face {
-	font-family: 'LotteMartDream';
-	font-style: normal;
-	font-weight: 400;
-	src:
-		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2')
-		format('woff2'),
-		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff')
-		format('woff');
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
 }
 
-@font-face {
-	font-family: 'LotteMartDream';
-	font-style: normal;
-	font-weight: 700;
-	src:
-		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2')
-		format('woff2'),
-		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff')
-		format('woff');
-}
-
-@font-face {
-	font-family: 'LotteMartDream';
-	font-style: normal;
-	font-weight: 300;
-	src:
-		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2')
-		format('woff2'),
-		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff')
-		format('woff');
-}
-
-.lottemartdream * {
-	font-family: 'LotteMartDream', sans-serif;
+.SUITE-Regular * {
+	font-family: 'SUITE-Regular', sans-serif;
 }
 
 html>body {
-	font-family: 'LotteMartDream', sans-serif;
+	font-family: 'SUITE-Regular', sans-serif;
 }
 
 /* 라이브러리 */
 
 /* 커스텀 */
 
+/* body {
+  background-image: url('KakaoTalk_20240229_134355371.jpg'); 배경 이미지 URL로 변경
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+ */
 header>div>a {
  	margin-left: 20px;
 }

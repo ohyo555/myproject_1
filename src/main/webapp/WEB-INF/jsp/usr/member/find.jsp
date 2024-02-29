@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="MEMBER LOGIN"></c:set>
 <%@ include file="../common/head.jspf"%>
-
+<link rel="stylesheet" href="/resource/background.css" />
 <style>
 	section > div div {
 		margin-bottom: 10px; 

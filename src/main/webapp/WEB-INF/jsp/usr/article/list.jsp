@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="#{board.code } ARTICLE LIST"></c:set>
-<%@ include file="../common/head.jspf"%>
+<link rel="stylesheet" href="/resource/background.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<body>
 
-<!-- <style>
-	.tb {
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	background-color: rgb(211, 232, 240);
-	width: 400px;
-}
-</style> -->
+<%@ include file="../common/head.jspf"%>
 
 <section class="mt-3 text-xl px-4">
 	<input type="hidden" name="id" value="${article.id }" />
@@ -104,7 +99,6 @@
 
 	</form>
 </section>
-
-
-
+	
+</body>
 <%@ include file="../common/foot.jspf"%>

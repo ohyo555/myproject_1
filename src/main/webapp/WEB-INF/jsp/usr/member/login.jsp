@@ -2,13 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="MEMBER LOGIN"></c:set>
 <%@ include file="../common/head.jspf"%>
-
- <style>
-
+<link rel="stylesheet" href="/resource/background.css" />
+<style>
         .login-container {
             max-width: 300px;
             margin: 100px auto;
-            background: #fff;
+            background-color: rgba(255, 255, 255, 0.4);
             padding: 20px;
             border-radius: 8px;
         }
@@ -67,7 +66,8 @@
     </form>
     <div class="center-text">
         <p class = "text-xs">Don’t have an account?<a href="../member/join" id="signup-link" class = "font-bold">Sign Up</a></p>
-        <p class = "text-xs mt-2">Forgot your ID or Password?<a href="#" id="forgot-link" class = "font-bold">Here!</a></p>
+        <p class = "text-xs mt-2">Forgot your ID or Password?<a href="#" id="forgot-link" class = "font-bold">Here!</a></p> 
+        <!-- <a href="../member/join" id="signup-link" class = "font-bold text-xs">회원가입</a><div class="ml-3 mr-3"></div><a href="#" id="forgot-link" class = "font-bold text-xs">아이디찾기/비밀번호찾기</a> -->
     </div>
 </div>
 
